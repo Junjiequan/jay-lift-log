@@ -345,7 +345,7 @@ table.prog td.r,table.prog th.r{text-align:right}
 <script>
 (function(){
 "use strict";
-const KEY = "lift-log-v1";
+const KEY = "jay-lift-log-v1";
 const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const LIFTS = {squat:"Squat",bench:"Bench",deadlift:"Deadlift",ohp:"Overhead press"};
 const EQUIP = {bar:"Barbell",db:"Dumbbells (per hand)",machine:"Machine / cable",plates:"Plates only",bw:"Bodyweight"};
@@ -355,7 +355,12 @@ const ICONS = {bench:"Bench press",incline:"Incline press",ohp:"Overhead press",
 // Photos are kept in their own localStorage key, not in the saved programme.
 // A few images would blow past the size limit of the account sync and of a
 // backup file, so they stay on the device that took them.
-const PKEY = "lift-log-photos-v1";
+const PKEY = "jay-lift-log-photos-v1";
+// The app used to be called Lift Log. Carry data saved under the old keys over
+// to the new ones once, so a rename never loses anyone's logs.
+[["lift-log-v1",KEY],["lift-log-photos-v1",PKEY]].forEach(([from,to])=>{
+  try{ const old=localStorage.getItem(from); if(old!==null){ if(localStorage.getItem(to)===null) localStorage.setItem(to,old); localStorage.removeItem(from); } }catch(e){}
+});
 let photos = {};
 try{ photos = JSON.parse(localStorage.getItem(PKEY)||"{}"); }catch(e){ photos = {}; }
 function savePhotos(){ try{ localStorage.setItem(PKEY, JSON.stringify(photos)); }catch(e){ toast("No room left for more photos"); } }
