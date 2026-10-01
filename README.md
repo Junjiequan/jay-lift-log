@@ -1,4 +1,4 @@
-# Workout Program
+# Jay Lift Log
 
 A single-file lifting and running tracker. No build step, no server, no account.
 Open index.html in a browser and it works.

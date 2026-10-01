@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1f5fbf">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Lift Log</title>
+<title>Jay Lift Log</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
@@ -548,7 +548,7 @@ function header(){
     return `<button class="day ${cls} ${i===today?"today":""}" data-day="${i}" aria-pressed="${i===ui.day}"><b>${d}</b><span class="dot"></span></button>`;
   }).join("");
   return `<header class="top">
-    <div class="titlebar"><h1>Lift Log</h1>
+    <div class="titlebar"><h1>Jay Lift Log</h1>
       <div class="weekinfo">Block ${state.block}, week <b>${state.week}</b> of 5<br>Run week <b>${state.runWeek}</b></div>
     </div>
     <div class="days">${days}</div>
@@ -831,7 +831,7 @@ document.addEventListener("click", async ev=>{
   if(act==="reset"){ openSheet(`<h3>Reset everything?</h3><p class="muted" style="font-size:15px">Restores the original programme and deletes your logs and custom exercises.</p><div class="stack"><button class="btn danger block" data-act="confirmreset">Reset</button><button class="btn block" data-act="close">Cancel</button></div>`); return; }
   if(act==="confirmreset"){ state=defaults(); save(); closeSheet(); ui.tab="train"; render(); toast("Programme reset"); return; }
   if(act==="export"){
-    const data = JSON.stringify(state,null,1); const name="lift-log-"+new Date().toISOString().slice(0,10)+".json";
+    const data = JSON.stringify(state,null,1); const name="jay-lift-log-"+new Date().toISOString().slice(0,10)+".json";
     let dl=null; try{ dl = window.claude && window.claude.use ? await window.claude.use("downloads") : null; }catch(e){}
     if(dl){ try{ await dl.save({filename:name, data}); toast("Backup saved"); }catch(e){ if(e && e.code!=="declined") toast("Export failed here"); } }
     else {
@@ -858,7 +858,7 @@ document.addEventListener("change", ev=>{
     r.onload=()=>{
       try{
         const s=JSON.parse(r.result);
-        if(!s || !Array.isArray(s.exercises)) return toast("That file is not a Lift Log backup");
+        if(!s || !Array.isArray(s.exercises)) return toast("That file is not a Jay Lift Log backup");
         // A shared template has exercises but no personal logs, so fill the gaps
         // from the defaults instead of rejecting it as an incomplete backup.
         const base=defaults();
@@ -870,7 +870,7 @@ document.addEventListener("change", ev=>{
           block:s.block||1, week:s.week||1, runWeek:s.runWeek||1
         });
         save(); ui.tab="train"; render(); toast(s.log?"Backup restored":"Programme imported");
-      }catch(e){ toast("That file is not a Lift Log backup"); }
+      }catch(e){ toast("That file is not a Jay Lift Log backup"); }
     };
     r.readAsText(t.files[0]);
   }
